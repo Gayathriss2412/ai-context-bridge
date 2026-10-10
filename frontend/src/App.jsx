@@ -1,39 +1,47 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
+import { checkBackendHealth } from "./services/api";
 
 function App() {
-  const [backendStatus, setBackendStatus] = useState("Connecting...");
-  const [backendMessage, setBackendMessage] = useState("");
+  const [backendStatus, setBackendStatus] = useState("Checking");
+  const [backendMessage, setBackendMessage] = useState(
+    "Checking the backend connection..."
+  );
+
+  const checkConnection = useCallback(async () => {
+    setBackendStatus("Checking");
+    setBackendMessage("Checking the backend connection...");
+
+    try {
+      const data = await checkBackendHealth();
+
+      setBackendStatus("Connected");
+      setBackendMessage(data.message || "Backend is running successfully.");
+    } catch (error) {
+      setBackendStatus("Disconnected");
+      setBackendMessage(
+        error.message || "Unable to connect to the backend."
+      );
+    }
+  }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/health")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Backend request failed");
-        }
+    checkConnection();
+  }, [checkConnection]);
 
-        return response.json();
-      })
-      .then((data) => {
-        setBackendStatus("Connected");
-        setBackendMessage(data.message);
-      })
-      .catch(() => {
-        setBackendStatus("Disconnected");
-        setBackendMessage("Unable to connect to the backend.");
-      });
-  }, []);
+  const statusClass =
+    backendStatus === "Connected"
+      ? "connected"
+      : backendStatus === "Checking"
+        ? "checking"
+        : "disconnected";
 
   return (
     <div className="app">
       <header className="navbar">
         <h1>AI Context Bridge</h1>
 
-        <span
-          className={`status ${
-            backendStatus === "Connected" ? "connected" : "disconnected"
-          }`}
-        >
+        <span className={`status ${statusClass}`}>
           ● {backendStatus}
         </span>
       </header>
@@ -62,6 +70,16 @@ function App() {
           </p>
 
           <p>{backendMessage}</p>
+
+          <button
+            type="button"
+            onClick={checkConnection}
+            disabled={backendStatus === "Checking"}
+          >
+            {backendStatus === "Checking"
+              ? "Checking..."
+              : "Retry Connection"}
+          </button>
         </section>
       </main>
     </div>
