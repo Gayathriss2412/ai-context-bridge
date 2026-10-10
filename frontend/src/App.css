@@ -1,0 +1,120 @@
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 8%;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.navbar h1 {
+  margin: 0;
+  color: #312e81;
+  font-size: 1.5rem;
+}
+
+.status {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.connected {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.disconnected {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.dashboard {
+  width: min(1000px, 84%);
+  margin: 60px auto;
+}
+
+.welcome-card {
+  padding: 55px 45px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+}
+
+.eyebrow {
+  color: #6366f1;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.welcome-card h2 {
+  max-width: 650px;
+  margin: 20px 0;
+  color: #1e1b4b;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.15;
+}
+
+.welcome-card > p:not(.eyebrow) {
+  max-width: 600px;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+.welcome-card button {
+  margin-top: 20px;
+  padding: 13px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.connection-card {
+  margin-top: 25px;
+  padding: 25px;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: white;
+}
+
+.connection-card h3 {
+  margin-top: 0;
+  color: #1e1b4b;
+}
+
+.connection-card p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 18px 5%;
+  }
+
+  .navbar h1 {
+    font-size: 1.15rem;
+  }
+
+  .dashboard {
+    width: 90%;
+    margin: 30px auto;
+  }
+
+  .welcome-card {
+    padding: 30px 22px;
+  }
+}
